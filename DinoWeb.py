@@ -37,10 +37,12 @@ while True:
             time.sleep(0.5)
             pyautogui.press('x')
             time.sleep(1)
-            pyautogui.alert(text='PRESSIONE A TECLA ESPAÇO PARA FINALIZAR O PROGRAMA!', title='É OS GURI', button='OK')
+            pyautogui.alert(text='PRESSIONE A TECLA ESPAÇO PARA FINALIZAR O PROGRAMA!', title='É OS GURI', 
+                            button='OK')
             pyautogui.press('space')
             time.sleep(1)
-
+            X = 500
+        
 
             def capture_tela():
                 tela = ImageGrab.grab()
@@ -48,48 +50,38 @@ while True:
 
 
             def capture_enemy(tela):
-                for x in range(540, 450, -1):
-                    for y in range(620, 630):
+                for x in range(int(X), int(X-50), int(-1)):
+                    for y in range(500, 630):
+                        tela_2 = tela.getpixel((x, y))
+                for x in range(int(X), int(X-50), int(-1)):
+                    for y in range(500, 630):
                         cor = tela.getpixel((x, y))
-                        if cor == (172, 172, 172):
+                        if cor != tela_2:
                             return True
-
-
-            def capture_small(tela):
-                for x in range(540, 450, -1):
-                    for y in range(630, 650):
-                        cor = tela.getpixel((x, y))
-                        if cor == (172, 172, 172):
-                            return True
-
+                        else:
+                            tela_2 = tela
+                            return False
+            
 
             def capture_blue(tela):
-                for x in range(540, 450, -1):
-                    for y in range(620, 680):
+                for x in range(int(X), int(X-50), int(-1)):
+                    for y in range(600, 650):
                         cor = tela.getpixel((x, y))
                         if cor == (60, 187, 255) or cor == (0, 48, 209):
                             return True
 
 
-            def capture_down_bird(tela):
-                for x in range(540, 450, -1):
-                    for y in range(565, 585):
-                        cor = tela.getpixel((x, y))
-                        if cor == (172, 172, 172):
-                            return True
-
 
             while True:
                 if keyboard.is_pressed('space'):
-                    pyautogui.alert(text='PROGRAMA DESLIGADO', title='ATÉ LOGO!')
+                    pyautogui.alert(text='PROGRAMA DESLIGADO',
+                                    title='ATÉ LOGO!')
                     pyautogui.hotkey('alt', 'f4')
                     sys.exit()
                 tela = capture_tela()
                 if capture_enemy(tela):
                     pyautogui.press('up')
+                    X += 1
                 if capture_blue(tela):
                     pyautogui.press('up')
-                if capture_small(tela):
-                    pyautogui.press('up')
-                if capture_down_bird(tela):
-                    pyautogui.press('up')
+                    X += 1
